@@ -1,12 +1,15 @@
 package com.example.demo.entity;
 
+import com.example.demo.validator.NotEmptyDate;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -15,6 +18,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Setter
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Document(collection = "activity")
 public class Activity {
 
@@ -34,11 +39,11 @@ public class Activity {
     @Size(max = 200)
     private String description;
 
-    @NotBlank
+    @NotEmptyDate
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDateTime;
 
-    @NotBlank
+    @NotEmptyDate
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endDateTime;
 

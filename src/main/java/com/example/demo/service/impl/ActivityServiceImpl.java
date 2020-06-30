@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ActivityServiceImpl implements ActivityService {
+public class ActivityServiceImpl implements ActivityService<Activity> {
 
     private final ActivityRepository activityRepository;
 
@@ -18,10 +18,11 @@ public class ActivityServiceImpl implements ActivityService {
         this.activityRepository = activityRepository;
     }
 
-    public void addMember(Activity justiceLeagueMember) {
-        activityRepository.findById(justiceLeagueMember.getId()).orElseThrow(ActivityManagementException::new);
-        
-        activityRepository.insert(justiceLeagueMember);
+    public Activity addMember(Activity activity) {
+        if (activity.getId() != null) {
+            activityRepository.findById(activity.getId()).orElseThrow(ActivityManagementException::new);
+        }
+        return activityRepository.insert(activity);
     }
     
     public List<Activity> findAll(){
