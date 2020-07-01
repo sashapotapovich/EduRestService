@@ -21,18 +21,18 @@ class DemoApplicationTests {
     
     @Test
     void addActivityTest(){
-        activityService.addMember(new Activity("title",
-                                               "summary",
-                                               "description", 
-                                               LocalDateTime.now(), 
-                                               LocalDateTime.now(), 
-                                               "info"));
-        activityService.addMember(new Activity("title2",
-                                               "summary3",
-                                               "description4",
-                                               LocalDateTime.now(),
-                                               LocalDateTime.now(),
-                                               "info5"));
+        activityService.addActivity(new Activity("title",
+                                                 "summary",
+                                                 "description",
+                                                 LocalDateTime.now(),
+                                                 LocalDateTime.now(),
+                                                 "info"));
+        activityService.addActivity(new Activity("title2",
+                                                 "summary3",
+                                                 "description4",
+                                                 LocalDateTime.now(),
+                                                 LocalDateTime.now(),
+                                                 "info5"));
         int size = activityService.findAll().size();
         Assertions.assertEquals(2, size);
     }

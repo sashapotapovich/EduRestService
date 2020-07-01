@@ -39,7 +39,7 @@ public class ActivityController {
     @PostMapping
     public Activity addActivity(@Valid @RequestBody Activity activity) {
         log.debug("Adding new Activity");
-        activityService.addMember(activity);
+        activityService.addActivity(activity);
         return activity;
     }
 

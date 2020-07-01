@@ -41,7 +41,7 @@ public class ActivityServiceImpl implements ActivityService<Activity> {
     }
 
     @Transactional
-    public Activity addMember(Activity activity) {
+    public Activity addActivity(Activity activity) {
         if (activity.getId() != null) {
             activityRepository.findById(activity.getId()).orElseThrow(ActivityManagementException::new);
         }
@@ -58,7 +58,9 @@ public class ActivityServiceImpl implements ActivityService<Activity> {
                 log.error(e.getLocalizedMessage());
             }
         }
-        History history = new History(savedActivity.getId(), LocalDateTime.now(), ActionType.CREATE, changeSet);
+        History history = new History(savedActivity.getId(),
+                                      LocalDateTime.now(),
+                                      ActionType.CREATE, changeSet);
         historyRepository.insert(history);
         return savedActivity;
     }
@@ -83,7 +85,9 @@ public class ActivityServiceImpl implements ActivityService<Activity> {
                 log.error(e.getLocalizedMessage());
             }
         }
-        History history = new History(activity.getId(), LocalDateTime.now(), ActionType.UPDATE, changeSet);
+        History history = new History(activity.getId(),
+                                      LocalDateTime.now(),
+                                      ActionType.UPDATE, changeSet);
         historyRepository.insert(history);
         return activity;
     }
@@ -105,7 +109,9 @@ public class ActivityServiceImpl implements ActivityService<Activity> {
                 log.error(e.getLocalizedMessage());
             }
         }
-        History history = new History(byId.getId(), LocalDateTime.now(), ActionType.DELETE, changeSet);
+        History history = new History(byId.getId(),
+                                      LocalDateTime.now(),
+                                      ActionType.DELETE, changeSet);
         historyRepository.insert(history);
         return byId;
     }
