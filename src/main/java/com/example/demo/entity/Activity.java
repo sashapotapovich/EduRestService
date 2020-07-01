@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -23,8 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Document(collection = "activity")
 public class Activity {
 
-    @MongoId
-    @Indexed
+    @Id
     private String id;
 
     @NotEmpty
@@ -39,7 +39,7 @@ public class Activity {
     @Size(max = 200)
     private String description;
 
-    @NotEmptyDate
+    @NotEmptyDate(message = "{NotEmptyDate.startDateTime.title}")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDateTime;
 

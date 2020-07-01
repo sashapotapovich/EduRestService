@@ -1,14 +1,17 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Activity;
+import com.example.demo.exception.ActivityManagementException;
 import com.example.demo.service.ActivityService;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -21,12 +24,8 @@ public class ActivityController {
     public ActivityController(ActivityService<Activity> activityService) {
         this.activityService = activityService;
     }
-    
-    @RequestMapping(method = RequestMethod.POST, produces = {
-            MediaType.APPLICATION_JSON_VALUE
-    }, consumes = {
-            MediaType.APPLICATION_JSON_VALUE
-    })
+
+    @PostMapping
     public Activity addActivity(@Valid @RequestBody Activity activity) {
         try {
             activityService.addMember(activity);
@@ -35,10 +34,17 @@ public class ActivityController {
         }
         return activity;
     }
-    
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Activity> getAllUsers() {
-        System.out.println("Getting Activities");
+
+    @GetMapping("/list")
+    public List<Activity> getAllActivities() {
+        log.info("Getting all Activities");
         return activityService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Activity getActivity(@PathVariable String id) {
+        log.info("Getting Activity for id - {}", id);
+        Optional<Activity> byId = activityService.findById(id);
+        return byId.orElseThrow(() -> new ActivityManagementException("Activity not found, id - " + id));
     }
 }

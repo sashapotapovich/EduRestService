@@ -9,5 +9,10 @@ class DemoApplicationTests {
     @Test
     void contextLoads() {
     }
+    
+    @Test
+    void addActivityTest(){
+        
+    }
 
 }

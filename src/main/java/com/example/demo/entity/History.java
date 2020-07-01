@@ -1,16 +1,39 @@
 package com.example.demo.entity;
 
-public class History {
+import java.time.LocalDateTime;
+import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.format.annotation.DateTimeFormat;
 
-/*    History {
-        dateTime (ISO Date Time)
-        type (UPDATE, COMPOSE)
-        changes [
-                {
-                        fieldName
-                        oldValue
-                        newValue
-                }
-                ]
-    }*/
+@Setter
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode(exclude = "changes")
+@ToString
+@Document(collection = "history")
+public class History {
+    
+    @MongoId
+    @Indexed
+    private String id;
+    private String activityId;
+    
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime dateTime;
+    private ActionType type;
+    private List<ChangeSet> changes;
+
+    public History(String activityId, LocalDateTime dateTime, ActionType type, List<ChangeSet> changes) {
+        this.activityId = activityId;
+        this.dateTime = dateTime;
+        this.type = type;
+        this.changes = changes;
+    }
 }
