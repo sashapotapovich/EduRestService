@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/history")
 public class HistoryController {
-    
+
     private final HistoryRepository historyRepository;
 
     public HistoryController(HistoryRepository historyRepository) {
@@ -18,7 +18,7 @@ public class HistoryController {
     }
 
     @GetMapping
-    public List<History> getAll(){
+    public List<History> getAll() {
         return historyRepository.findAll();
     }
 }
