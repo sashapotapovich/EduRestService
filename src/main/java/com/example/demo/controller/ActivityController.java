@@ -1,12 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Activity;
-import com.example.demo.exception.ActivityManagementException;
 import com.example.demo.service.ActivityService;
 import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,26 +24,36 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    @PostMapping
-    public Activity addActivity(@Valid @RequestBody Activity activity) {
-        try {
-            activityService.addMember(activity);
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
-        }
-        return activity;
+    @GetMapping("/{id}")
+    public Activity getActivity(@PathVariable String id) {
+        log.debug("Trying to get Activity for the id - {}", id);
+        return activityService.findById(id);
     }
 
     @GetMapping("/list")
     public List<Activity> getAllActivities() {
-        log.info("Getting all Activities");
+        log.debug("Trying to get all Activities");
         return activityService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Activity getActivity(@PathVariable String id) {
-        log.info("Getting Activity for id - {}", id);
-        Optional<Activity> byId = activityService.findById(id);
-        return byId.orElseThrow(() -> new ActivityManagementException("Activity not found, id - " + id));
+    @PostMapping
+    public Activity addActivity(@Valid @RequestBody Activity activity) {
+        log.debug("Adding new Activity");
+        activityService.addMember(activity);
+        return activity;
+    }
+
+
+    @PostMapping("/{id}")
+    public Activity updateActivity(@PathVariable String id,
+                                   @Valid @RequestBody Activity activity) {
+        log.debug("Trying to update Activity for the id - {}", id);
+        return activityService.update(id, activity);
+    }
+
+    @DeleteMapping("/{id}")
+    public Activity deleteActivity(@PathVariable String id) {
+        log.debug("Trying to delete Activity for the id - {}", id);
+        return activityService.deleteActivity(id);
     }
 }

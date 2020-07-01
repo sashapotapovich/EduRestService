@@ -26,7 +26,7 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(ActivityManagementException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String processActivityManagementError(ActivityManagementException ex) {
         return ex.getLocalizedMessage();

@@ -7,5 +7,7 @@ import java.util.Optional;
 public interface ActivityService<T extends Activity> { //TODO: DO we need wildcard here
     T addMember(T activity);
     List<T>findAll();
-    Optional<T> findById(String id);
+    T findById(String id);
+    T update(String id, T activity);
+    T deleteActivity(String id);
 }
