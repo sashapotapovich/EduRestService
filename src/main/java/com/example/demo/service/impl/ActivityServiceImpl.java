@@ -45,6 +45,7 @@ public class ActivityServiceImpl implements ActivityService<Activity> {
         if (activity.getId() != null) {
             activityRepository.findById(activity.getId()).orElseThrow(ActivityManagementException::new);
         }
+        log.debug("New Activity - {}", activity);
         Activity savedActivity = activityRepository.insert(activity);
         List<ChangeSet> changeSet = new ArrayList<>();
         Field[] declaredFields = Activity.class.getDeclaredFields();

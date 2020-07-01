@@ -7,9 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Setter
@@ -19,12 +18,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @ToString
 @Document(collection = "history")
 public class History {
-    
-    @MongoId
-    @Indexed
+
+    @Id
     private String id;
     private String activityId;
-    
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTime;
     private ActionType type;

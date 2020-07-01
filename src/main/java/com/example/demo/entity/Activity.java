@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,6 +27,7 @@ public class Activity {
     private String id;
 
     @NotBlank
+    @Indexed
     @Size(max = 100, message = "{Activity.title.size.title}")
     private String title;
 
