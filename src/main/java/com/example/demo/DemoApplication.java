@@ -11,7 +11,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Slf4j
 @SpringBootApplication
-@EnableTransactionManagement
+//@EnableTransactionManagement
 public class DemoApplication {
 
     @Bean
