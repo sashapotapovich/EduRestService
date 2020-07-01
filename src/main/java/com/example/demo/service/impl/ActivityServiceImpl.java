@@ -10,6 +10,7 @@ import com.example.demo.repository.HistoryRepository;
 import com.example.demo.service.ActivityService;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,7 @@ public class ActivityServiceImpl implements ActivityService<Activity> {
             activityRepository.findById(activity.getId()).orElseThrow(ActivityManagementException::new);
         }
         log.debug("New Activity - {}", activity);
+        truncateTime(activity);
         Activity savedActivity = activityRepository.insert(activity);
         List<ChangeSet> changeSet = new ArrayList<>();
         Field[] declaredFields = Activity.class.getDeclaredFields();
@@ -71,6 +73,7 @@ public class ActivityServiceImpl implements ActivityService<Activity> {
         Activity byId = activityRepository.findById(id).orElseThrow(
                 () -> new ActivityManagementException("Activity was not found, id - " + id));
         activity.setId(byId.getId());
+        truncateTime(activity);
         activityRepository.save(activity);
         List<ChangeSet> changeSet = new ArrayList<>();
         Field[] declaredFields = Activity.class.getDeclaredFields();
@@ -115,5 +118,10 @@ public class ActivityServiceImpl implements ActivityService<Activity> {
                                       ActionType.DELETE, changeSet);
         historyRepository.insert(history);
         return byId;
+    }
+
+    private void truncateTime(Activity activity) {
+        activity.setStartDateTime(activity.getStartDateTime().truncatedTo(ChronoUnit.MILLIS));
+        activity.setEndDateTime(activity.getEndDateTime().truncatedTo(ChronoUnit.MILLIS));
     }
 }
