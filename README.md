@@ -3,7 +3,7 @@
 ## Start MongoDB in Docker
 
 ### 1) Create new Docker network:
-     `docker network create my-mongo-cluster`
+     docker network create my-mongo-cluster
 
 ### 2) Start containers using the next commands:
 
