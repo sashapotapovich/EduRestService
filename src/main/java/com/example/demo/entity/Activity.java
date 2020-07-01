@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Setter
@@ -27,27 +25,27 @@ public class Activity {
     @Id
     private String id;
 
-    @NotEmpty
-    @Size(max = 100)
+    @NotBlank
+    @Size(max = 100, message = "{Activity.title.size.title}")
     private String title;
 
-    @NotEmpty
-    @Size(max = 25)
+    @NotBlank
+    @Size(max = 25, message = "{Activity.summary.size.title}")
     private String summary;
 
-    @NotEmpty
-    @Size(max = 200)
+    @NotBlank
+    @Size(max = 200, message = "{Activity.description.size.title}")
     private String description;
 
     @NotEmptyDate(message = "{NotEmptyDate.startDateTime.title}")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDateTime;
 
-    @NotEmptyDate
+    @NotEmptyDate(message = "{NotEmptyDate.endDateTime.title}")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endDateTime;
 
-    @Size(max = 255)
+    @Size(max = 255, message = "{Activity.info.size.title}")
     private String info;
 
     public Activity(@NotEmpty @Size(max = 100) String title, @NotEmpty @Size(max = 25) String summary, @NotEmpty @Size(max = 200) String description, @NotBlank LocalDateTime startDateTime, @NotBlank LocalDateTime endDateTime, @Size(max = 255) String info) {
